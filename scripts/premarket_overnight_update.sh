@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
-cd <WORKSPACE_PATH>
+cd "$(dirname "$0")/.."
+: "${TELEGRAM_TARGET:?Set TELEGRAM_TARGET to the Telegram chat target}"
 PROMPT=$(cat <<'EOF'
 Update the US premarket long watchlist before the US market opens.
 
@@ -84,4 +85,4 @@ Win Probability：
 Keep it concise and readable in under two minutes.
 EOF
 )
-openclaw agent --channel telegram --to <TELEGRAM_TARGET> --deliver --timeout 600 --message "$PROMPT"
+openclaw agent --channel telegram --to "$TELEGRAM_TARGET" --deliver --timeout 600 --message "$PROMPT"
