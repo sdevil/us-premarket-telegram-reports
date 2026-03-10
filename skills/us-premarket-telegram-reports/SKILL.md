@@ -98,3 +98,5 @@ If those appear, stop using built-in cron for this workflow and switch to system
 - `ticker-catalyst-map.md`: ticker-specific and macro-special-source weighting guidance
 - `macro-geopolitical-map.md`: top-down market regime and geopolitical impact guidance
 - `strategy-lessons.md`: durable lessons and reusable watchpoints extracted from review
+
+Use `scripts/extract_strategy_lessons.py` when you want to append durable lessons from a post-market review into the long-term strategy memory file.

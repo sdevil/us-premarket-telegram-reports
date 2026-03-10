@@ -206,6 +206,10 @@ It now asks for:
 - future watchpoints for the same stock or setup
 - candidate lessons worth writing into long-term strategy rules
 
+The review flow now also appends extracted durable lessons into:
+
+- `skills/us-premarket-telegram-reports/references/strategy-lessons.md`
+
 ## Lessons learned
 
 ### 1. Delivery path matters more than scheduling elegance

@@ -205,6 +205,10 @@ systemctl --user enable --now premarket-overnight-update.timer
 - 下次再遇到这只股票/这类 setup 时要多看的点
 - 哪些经验值得写回长期规则
 
+并且复盘流程现在会自动把提取出的长期经验追加到：
+
+- `skills/us-premarket-telegram-reports/references/strategy-lessons.md`
+
 ## 经验总结
 
 ### 1. 投递链路比调度形式更重要
