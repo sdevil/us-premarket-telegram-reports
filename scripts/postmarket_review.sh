@@ -43,6 +43,9 @@ Review tasks:
 - Give concrete strategy adjustments for the next session.
 - Evaluate whether ticker-specific drivers were used correctly. Example: TSLA should weight Musk/Tesla signals more; biotech should weight trial/FDA outcomes more.
 - Evaluate whether macro-special-source interpretation was correct. Example: Trump/policy posts should usually affect market/sector weighting before single-stock ranking.
+- For every meaningful mismatch between forecast and reality, identify the main reason category: macro regime mismatch, sector mismatch, ticker-specific catalyst mismatch, structure/volume mismatch, or execution-rule mismatch.
+- Convert the mismatch into future watchpoints that should matter next time this stock or setup appears.
+- When a lesson feels durable, write it as a reusable rule instead of a one-off comment.
 
 Required output format:
 美股收盘后复盘
@@ -63,6 +66,9 @@ MFE：
 MAE：
 判断问题：
 执行问题：
+偏差归因类别：
+导致出入的核心原因：
+下次再做这只股票/这类 setup 时要多看什么：
 复盘结论：
 
 #2 ... same structure
@@ -94,6 +100,10 @@ Ticker-specific 学习
 哪些股票的自有特性今天最重要：
 哪些股票今天不该套用通用逻辑：
 哪些宏观/政策信号今天改变了排序：
+
+长期规则候选
+值得写回长期规则的内容：
+未来需要持续跟踪的关注点：
 
 Keep it concise but specific.
 EOF

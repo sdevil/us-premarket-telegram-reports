@@ -184,6 +184,28 @@ This reference tells the report logic to weigh different sources differently for
 - `NVDA` / `AMD` / `AVGO` / `MU` -> AI infrastructure demand, capex, policy/export restrictions, conference/product-cycle signals
 - `VRTX` / biotech names -> clinical/FDA/regulatory signals
 
+### Macro and geopolitical regime layer
+
+The system now also includes a top-down macro filter in:
+
+- `skills/us-premarket-telegram-reports/references/macro-geopolitical-map.md`
+
+This layer forces the report logic to ask whether a major event changes the odds before ranking individual names. Examples:
+
+- Middle East / Iran escalation -> oil, defense, inflation, VIX, risk-off pressure
+- tariff/trade escalation -> China exposure, industrials, semis, supply chains
+- Fed/rates shock -> duration sensitivity, high-multiple growth risk
+
+### Review now learns from forecast error
+
+Post-market review is no longer just a summary.
+It now asks for:
+
+- mismatch attribution
+- root-cause category
+- future watchpoints for the same stock or setup
+- candidate lessons worth writing into long-term strategy rules
+
 ## Lessons learned
 
 ### 1. Delivery path matters more than scheduling elegance

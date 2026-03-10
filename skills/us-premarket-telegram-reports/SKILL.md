@@ -73,6 +73,8 @@ Enforce all of the following in the automation prompt:
 - include a Telegram-friendly summary block
 - apply ticker-specific catalyst weighting when relevant instead of treating all names identically
 - interpret Trump/policy-style social posts as macro/sector signals first unless they directly target a single company
+- apply a top-down macro/geopolitical regime filter before ranking names
+- use post-market review to perform mismatch attribution and extract reusable future watchpoints
 
 ## If OpenClaw cron is broken
 
@@ -94,3 +96,5 @@ If those appear, stop using built-in cron for this workflow and switch to system
 ### references/
 - `deployment-notes.md`: operational lessons and known failure modes
 - `ticker-catalyst-map.md`: ticker-specific and macro-special-source weighting guidance
+- `macro-geopolitical-map.md`: top-down market regime and geopolitical impact guidance
+- `strategy-lessons.md`: durable lessons and reusable watchpoints extracted from review

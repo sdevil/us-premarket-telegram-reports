@@ -53,6 +53,9 @@ Macro-special-source rules:
 - Consider Trump/policy-style social posts or public statements as macro / policy / sector signals, not automatic single-stock catalysts.
 - If such a post matters, explicitly decide whether it affects the overall market, a sector, or a specific ticker.
 - Re-rank candidates if macro/policy headlines materially change risk appetite, tariff sensitivity, China exposure, regulation, or opening sentiment.
+- Also evaluate broader macro/geopolitical regime before ranking names: war risk, Middle East/Iran escalation, oil shock, tariff escalation, sanctions, Fed/rates/inflation regime.
+- If a macro/geopolitical shock is active, adjust 市场适合度, 交易风险等级, 板块强弱, and confidence in breakout longs.
+- A strong single-stock catalyst does not automatically override a major macro shock.
 
 For each candidate, briefly cite the source basis in plain text, for example: 来源依据：Reuters / CNBC / Yahoo Finance / Nasdaq Market Activity.
 

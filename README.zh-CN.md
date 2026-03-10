@@ -184,6 +184,27 @@ systemctl --user enable --now premarket-overnight-update.timer
 - `NVDA` / `AMD` / `AVGO` / `MU` -> AI 基础设施需求、capex、政策/出口限制、大会/产品周期
 - `VRTX` / 生物科技 -> 临床数据、FDA、监管进展
 
+### 宏观与地缘局势过滤层
+
+系统现在还增加了一层自上而下的宏观过滤，文件在：
+
+- `skills/us-premarket-telegram-reports/references/macro-geopolitical-map.md`
+
+这层的作用是：在选股之前，先判断当天世界局势会不会改变整个做多赔率。比如：
+
+- 中东 / 伊朗升级 -> 油价、国防、通胀预期、VIX、risk-off
+- 关税 / 贸易升级 -> 中国敞口、工业、半导体、供应链
+- Fed / 利率冲击 -> 长久期成长股、高估值科技的风险
+
+### 复盘现在会学习“为什么预测和现实有出入”
+
+收盘后复盘现在不只是总结涨跌，而是会额外输出：
+
+- 偏差归因
+- 根因类别
+- 下次再遇到这只股票/这类 setup 时要多看的点
+- 哪些经验值得写回长期规则
+
 ## 经验总结
 
 ### 1. 投递链路比调度形式更重要
