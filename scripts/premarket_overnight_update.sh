@@ -2,6 +2,10 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 : "${TELEGRAM_TARGET:?Set TELEGRAM_TARGET to the Telegram chat target}"
+TRADE_DATE="$(TZ=America/New_York date +%F)"
+REPORT_DIR="${REPORT_DIR:-$(pwd)/reports}"
+mkdir -p "$REPORT_DIR"
+OUTFILE="$REPORT_DIR/${TRADE_DATE}-overnight.md"
 PROMPT=$(cat <<'EOF'
 Update the US premarket long watchlist before the US market opens.
 
@@ -129,4 +133,7 @@ Win Probability：
 Keep it concise and readable in under two minutes.
 EOF
 )
-openclaw agent --agent trading-agent --channel telegram --to "$TELEGRAM_TARGET" --deliver --timeout 600 --message "$PROMPT"
+OUTPUT="$(openclaw agent --agent trading-agent --timeout 600 --message "$PROMPT")"
+printf '%s\n' "$OUTPUT" | tee "$OUTFILE" >/dev/null
+openclaw message send --channel telegram --target "$TELEGRAM_TARGET" --message "$OUTPUT"
+printf 'Saved overnight update to %s\n' "$OUTFILE"

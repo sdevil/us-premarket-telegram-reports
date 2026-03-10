@@ -1,0 +1,8 @@
+[Unit]
+Description=OpenClaw US post-market review
+
+[Service]
+Type=oneshot
+WorkingDirectory=/root/.openclaw/workspace/us-premarket-telegram-reports
+Environment=TELEGRAM_TARGET=8651624513
+ExecStart=/root/.openclaw/workspace/us-premarket-telegram-reports/scripts/postmarket_review.sh

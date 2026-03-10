@@ -1,0 +1,10 @@
+[Unit]
+Description=17:00 New York time weekdays post-market review
+
+[Timer]
+OnCalendar=Mon..Fri 17:00 America/New_York
+Persistent=true
+Unit=postmarket-review.service
+
+[Install]
+WantedBy=timers.target

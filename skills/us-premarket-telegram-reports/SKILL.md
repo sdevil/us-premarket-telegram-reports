@@ -5,10 +5,11 @@ description: Build, package, and deploy an automated US equities premarket watch
 
 # US Premarket Telegram Reports
 
-Create a working automation that sends two recurring US premarket reports to Telegram:
+Create a working automation that sends three recurring US-market reports to Telegram:
 
 1. **Primary report** — 22:30 Pacific/Auckland, Mon–Fri
 2. **Overnight update** — 09:30 America/New_York, Mon–Fri
+3. **Post-market review** — 17:00 America/New_York, Mon–Fri
 
 Keep the solution operational first. If built-in OpenClaw cron is unreliable, prefer a direct delivery path using `openclaw agent --channel telegram --to <target> --deliver` triggered by systemd user timers.
 
@@ -33,8 +34,10 @@ Prefer these scripts when you need a stable implementation:
 
 - `scripts/premarket_primary_report.sh`
 - `scripts/premarket_overnight_update.sh`
+- `scripts/postmarket_review.sh`
 
-These scripts call OpenClaw directly for report generation and Telegram delivery.
+These scripts call OpenClaw directly for report generation/review and Telegram delivery.
+The premarket scripts also archive their generated output under `reports/`, and the review script writes post-close analysis under `reviews/`.
 
 ## Timer deployment
 
@@ -44,6 +47,8 @@ When using the workaround, install these user units under `~/.config/systemd/use
 - `premarket-primary-report.timer`
 - `premarket-overnight-update.service`
 - `premarket-overnight-update.timer`
+- `postmarket-review.service`
+- `postmarket-review.timer`
 
 Then run:
 

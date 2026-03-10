@@ -4,7 +4,7 @@
 
 ## 功能说明
 
-它会向 Telegram 定时发送两类报告：
+它会向 Telegram 定时发送三类报告：
 
 1. **主报告**
    - 时间：**新西兰时间（NZT）每周一到周五 22:30**
@@ -13,6 +13,10 @@
 2. **隔夜更新**
    - 时间：**纽约时间每周一到周五 09:30**
    - 作用：在美股正常开市附近，结合隔夜市场、盘前异动和突发新闻更新观察名单
+
+3. **收盘后复盘**
+   - 时间：**纽约时间每周一到周五 17:00**
+   - 作用：在美股收盘后复盘当天实际走势，对照盘前建议提炼经验并持续优化策略
 
 ## 报告范围
 
@@ -54,8 +58,14 @@ openclaw agent --channel telegram --to <TELEGRAM_TARGET> --deliver --message "..
 
 - `scripts/premarket_primary_report.sh`
   - 发送 22:30 NZT 的主报告
+  - 同时把生成内容归档到 `reports/`
 - `scripts/premarket_overnight_update.sh`
   - 发送纽约开市时段的更新报告
+  - 同时把生成内容归档到 `reports/`
+- `scripts/postmarket_review.sh`
+  - 在美股收盘后复盘同一交易日
+  - 从 `reports/` 读取当日盘前报告
+  - 把复盘结果写入 `reviews/`
 
 ## 使用的调度
 
@@ -67,6 +77,11 @@ openclaw agent --channel telegram --to <TELEGRAM_TARGET> --deliver --message "..
 ### 定时器 2
 - 名称：`premarket-overnight-update.timer`
 - 时间：`Mon..Fri 09:30`
+- 时区：`America/New_York`
+
+### 定时器 3
+- 名称：`postmarket-review.timer`
+- 时间：`Mon..Fri 17:00`
 - 时区：`America/New_York`
 
 ## systemd 单元示例

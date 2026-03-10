@@ -4,7 +4,7 @@ This repository contains a working automation setup for sending a US equities pr
 
 ## What it does
 
-It sends two recurring reports to Telegram:
+It sends three recurring reports to Telegram:
 
 1. **Primary report**
    - Schedule: **22:30 New Zealand Time (NZT), Monday to Friday**
@@ -13,6 +13,10 @@ It sends two recurring reports to Telegram:
 2. **Overnight update**
    - Schedule: **09:30 New York time, Monday to Friday**
    - Purpose: refresh the watchlist around the regular US market open using overnight tone, premarket movers, and breaking news
+
+3. **Post-market review**
+   - Schedule: **17:00 New York time, Monday to Friday**
+   - Purpose: review the actual session after the close, score the morning ideas, and extract lessons for continuous strategy improvement
 
 ## Scope
 
@@ -54,8 +58,14 @@ openclaw agent --channel telegram --to <TELEGRAM_TARGET> --deliver --message "..
 
 - `scripts/premarket_primary_report.sh`
   - sends the 22:30 NZT primary report
+  - saves a local archive under `reports/`
 - `scripts/premarket_overnight_update.sh`
   - sends the New York market-open update
+  - saves a local archive under `reports/`
+- `scripts/postmarket_review.sh`
+  - reviews the same trade date after the US close
+  - reads archived report files from `reports/`
+  - writes a review file under `reviews/`
 
 ## Scheduling used
 
@@ -67,6 +77,11 @@ openclaw agent --channel telegram --to <TELEGRAM_TARGET> --deliver --message "..
 ### Timer 2
 - Name: `premarket-overnight-update.timer`
 - Schedule: `Mon..Fri 09:30`
+- Time zone: `America/New_York`
+
+### Timer 3
+- Name: `postmarket-review.timer`
+- Schedule: `Mon..Fri 17:00`
 - Time zone: `America/New_York`
 
 ## systemd unit examples

@@ -12,6 +12,7 @@ Use this path when reliability matters:
 
 - primary report: Mon–Fri 22:30 Pacific/Auckland
 - overnight update: Mon–Fri 09:30 America/New_York
+- post-market review: Mon–Fri 17:00 America/New_York
 
 ## Known failure pattern on the tested machine
 
@@ -49,6 +50,8 @@ Current expectations:
 - if only two names truly qualify, the third slot should be presented as a **conditional watchlist** rather than a fake equal-strength pick
 - the report is allowed to say that quality drops off sharply after the first two names
 - overnight updates should emphasize **open-drive tradability** even more than the evening primary report
+- the premarket scripts should archive same-day outputs under `reports/` so post-close review has stable inputs
+- the post-market review should write a review artifact under `reviews/` and extract concrete strategy adjustments for the next session
 
 ## Packaging
 
