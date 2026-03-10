@@ -136,11 +136,23 @@ systemctl --user enable --now premarket-overnight-update.timer
 
 The report prompt explicitly requires:
 
-- exactly **3 ranked candidates**
+- exactly **3 ranked outputs**
 - no fabricated market data
 - fallback to previous day levels if premarket levels are unavailable
 - concise output readable in under two minutes
 - Telegram-friendly summary cards
+- ranking by **next-day tradability**, not company prestige
+- preference for **single-name catalysts** over generic sector sympathy
+- if only two names are truly strong, the third item should be downgraded to a **conditional watchlist / fallback name** instead of pretending all three are equal
+
+### Current prompt behavior
+
+Both the primary report and the overnight update now use the same stricter selection philosophy:
+
+- the first two names should be the real high-conviction setups when available
+- the third slot may be labeled as a **Watchlist** candidate if setup quality drops off
+- the report should explicitly admit when quality falls sharply after the top two names
+- large-cap AI leaders should not be included automatically just because they are liquid or famous
 
 ## Lessons learned
 

@@ -38,6 +38,18 @@ bash scripts/premarket_primary_report.sh
 2. Only after direct delivery works, add systemd timers.
 3. Avoid relying on built-in OpenClaw cron if the symptoms above appear.
 
+## Current report-shaping rules
+
+The production prompts were tightened after dry-run review.
+
+Current expectations:
+
+- top ideas should be ranked by **next-session tradability**, not brand recognition
+- single-name catalysts beat generic sector-strength arguments
+- if only two names truly qualify, the third slot should be presented as a **conditional watchlist** rather than a fake equal-strength pick
+- the report is allowed to say that quality drops off sharply after the first two names
+- overnight updates should emphasize **open-drive tradability** even more than the evening primary report
+
 ## Packaging
 
 Package the skill with:
