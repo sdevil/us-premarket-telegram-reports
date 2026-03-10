@@ -7,12 +7,12 @@
 它会向 Telegram 定时发送两类报告：
 
 1. **主报告**
-   - 时间：**新西兰时间（NZT）每周一到周五 22:00**
+   - 时间：**新西兰时间（NZT）每周一到周五 22:30**
    - 作用：在睡前生成**下一个美股交易日**的做多观察名单
 
 2. **隔夜更新**
-   - 时间：**新西兰时间（NZT）每周二到周六 03:00**
-   - 作用：结合隔夜市场、盘前异动和突发新闻，对报告进行更新
+   - 时间：**纽约时间每周一到周五 09:30**
+   - 作用：在美股正常开市附近，结合隔夜市场、盘前异动和突发新闻更新观察名单
 
 ## 报告范围
 
@@ -53,21 +53,21 @@ openclaw agent --channel telegram --to <TELEGRAM_TARGET> --deliver --message "..
 ## 仓库内容
 
 - `scripts/premarket_primary_report.sh`
-  - 发送 22:00 NZT 的主报告
+  - 发送 22:30 NZT 的主报告
 - `scripts/premarket_overnight_update.sh`
-  - 发送 03:00 NZT 的隔夜更新
+  - 发送纽约开市时段的更新报告
 
 ## 使用的调度
 
 ### 定时器 1
 - 名称：`premarket-primary-report.timer`
-- 时间：`Mon..Fri 22:00`
+- 时间：`Mon..Fri 22:30`
 - 时区：`Pacific/Auckland`
 
 ### 定时器 2
 - 名称：`premarket-overnight-update.timer`
-- 时间：`Tue..Sat 03:00`
-- 时区：`Pacific/Auckland`
+- 时间：`Mon..Fri 09:30`
+- 时区：`America/New_York`
 
 ## systemd 单元示例
 
@@ -85,13 +85,26 @@ ExecStart=<WORKSPACE_PATH>/scripts/premarket_primary_report.sh
 ### `premarket-primary-report.timer`
 ```ini
 [Unit]
-Description=22:00 NZT weekdays premarket primary report
+Description=22:30 NZT weekdays premarket primary report
 
 [Timer]
-OnCalendar=Mon..Fri 22:00
-TimeZone=Pacific/Auckland
+OnCalendar=Mon..Fri 22:30 Pacific/Auckland
 Persistent=true
 Unit=premarket-primary-report.service
+
+[Install]
+WantedBy=timers.target
+```
+
+### `premarket-overnight-update.timer`
+```ini
+[Unit]
+Description=09:30 New York time weekdays premarket overnight update
+
+[Timer]
+OnCalendar=Mon..Fri 09:30 America/New_York
+Persistent=true
+Unit=premarket-overnight-update.service
 
 [Install]
 WantedBy=timers.target

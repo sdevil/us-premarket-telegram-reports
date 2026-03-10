@@ -10,8 +10,8 @@ Use this path when reliability matters:
 
 ## Example timer cadence
 
-- primary report: Mon–Fri 22:00 Pacific/Auckland
-- overnight update: Tue–Sat 03:00 Pacific/Auckland
+- primary report: Mon–Fri 22:30 Pacific/Auckland
+- overnight update: Mon–Fri 09:30 America/New_York
 
 ## Known failure pattern on the tested machine
 

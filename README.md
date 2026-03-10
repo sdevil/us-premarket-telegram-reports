@@ -7,12 +7,12 @@ This repository contains a working automation setup for sending a US equities pr
 It sends two recurring reports to Telegram:
 
 1. **Primary report**
-   - Schedule: **22:00 New Zealand Time (NZT), Monday to Friday**
+   - Schedule: **22:30 New Zealand Time (NZT), Monday to Friday**
    - Purpose: generate the next US trading day's long watchlist before sleep
 
 2. **Overnight update**
-   - Schedule: **03:00 New Zealand Time (NZT), Tuesday to Saturday**
-   - Purpose: refresh the watchlist using overnight tone, premarket movers, and breaking news
+   - Schedule: **09:30 New York time, Monday to Friday**
+   - Purpose: refresh the watchlist around the regular US market open using overnight tone, premarket movers, and breaking news
 
 ## Scope
 
@@ -38,7 +38,7 @@ OpenClaw's built-in cron path was found unreliable on this machine during testin
 - isolated cron runs created run/session index entries without corresponding session transcript files
 - main-session system-event cron runs completed, but did not reliably produce delivered Telegram messages
 
-Because of that, this repository uses a more reliable workaround:
+Because of that, this repository uses a more reliable workaround.
 
 ## Working architecture
 
@@ -53,21 +53,21 @@ openclaw agent --channel telegram --to <TELEGRAM_TARGET> --deliver --message "..
 ## Repository contents
 
 - `scripts/premarket_primary_report.sh`
-  - sends the 22:00 NZT primary report
+  - sends the 22:30 NZT primary report
 - `scripts/premarket_overnight_update.sh`
-  - sends the 03:00 NZT overnight refresh
+  - sends the New York market-open update
 
 ## Scheduling used
 
 ### Timer 1
 - Name: `premarket-primary-report.timer`
-- Schedule: `Mon..Fri 22:00`
+- Schedule: `Mon..Fri 22:30`
 - Time zone: `Pacific/Auckland`
 
 ### Timer 2
 - Name: `premarket-overnight-update.timer`
-- Schedule: `Tue..Sat 03:00`
-- Time zone: `Pacific/Auckland`
+- Schedule: `Mon..Fri 09:30`
+- Time zone: `America/New_York`
 
 ## systemd unit examples
 
@@ -85,13 +85,26 @@ ExecStart=<WORKSPACE_PATH>/scripts/premarket_primary_report.sh
 ### `premarket-primary-report.timer`
 ```ini
 [Unit]
-Description=22:00 NZT weekdays premarket primary report
+Description=22:30 NZT weekdays premarket primary report
 
 [Timer]
-OnCalendar=Mon..Fri 22:00
-TimeZone=Pacific/Auckland
+OnCalendar=Mon..Fri 22:30 Pacific/Auckland
 Persistent=true
 Unit=premarket-primary-report.service
+
+[Install]
+WantedBy=timers.target
+```
+
+### `premarket-overnight-update.timer`
+```ini
+[Unit]
+Description=09:30 New York time weekdays premarket overnight update
+
+[Timer]
+OnCalendar=Mon..Fri 09:30 America/New_York
+Persistent=true
+Unit=premarket-overnight-update.service
 
 [Install]
 WantedBy=timers.target

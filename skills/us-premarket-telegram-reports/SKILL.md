@@ -7,8 +7,8 @@ description: Build, package, and deploy an automated US equities premarket watch
 
 Create a working automation that sends two recurring US premarket reports to Telegram:
 
-1. **Primary report** — 22:00 Pacific/Auckland, Mon–Fri
-2. **Overnight update** — 03:00 Pacific/Auckland, Tue–Sat
+1. **Primary report** — 22:30 Pacific/Auckland, Mon–Fri
+2. **Overnight update** — 09:30 America/New_York, Mon–Fri
 
 Keep the solution operational first. If built-in OpenClaw cron is unreliable, prefer a direct delivery path using `openclaw agent --channel telegram --to <target> --deliver` triggered by systemd user timers.
 
