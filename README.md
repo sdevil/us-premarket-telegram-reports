@@ -168,6 +168,21 @@ Both the primary report and the overnight update now use the same stricter selec
 - the third slot may be labeled as a **Watchlist** candidate if setup quality drops off
 - the report should explicitly admit when quality falls sharply after the top two names
 - large-cap AI leaders should not be included automatically just because they are liquid or famous
+- ticker-specific catalysts should override generic one-size-fits-all weighting when relevant
+- macro/policy social-post signals (for example Trump-related posts) should be interpreted at the market/sector level first, not blindly treated as direct single-stock catalysts
+
+### Ticker-specific catalyst weighting
+
+The system now includes a first-pass ticker weighting layer in:
+
+- `skills/us-premarket-telegram-reports/references/ticker-catalyst-map.md`
+
+This reference tells the report logic to weigh different sources differently for different names. Examples:
+
+- `TSLA` -> Musk/Tesla posts, deliveries, FSD/robotaxi, China pricing/delivery
+- `AAPL` -> product events, supply chain, China demand, hardware/services cycle
+- `NVDA` / `AMD` / `AVGO` / `MU` -> AI infrastructure demand, capex, policy/export restrictions, conference/product-cycle signals
+- `VRTX` / biotech names -> clinical/FDA/regulatory signals
 
 ## Lessons learned
 

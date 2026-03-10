@@ -168,6 +168,21 @@ systemctl --user enable --now premarket-overnight-update.timer
 - 第三个位置在质量明显下降时，会明确标记为 **Watchlist / 条件观察名单**
 - 报告会直接承认“前两名之后质量明显下滑”
 - 不会因为某只大市值 AI 龙头很有名、流动性很强，就自动把它塞进前三
+- 当某些股票存在明显“自有驱动”时，会优先采用该股票的特定权重，而不是套用一刀切逻辑
+- 像特朗普相关社交帖/政策表态这类信号，会优先按**市场/板块级影响**解释，而不是粗暴当成单股催化
+
+### 股票特定催化权重
+
+系统现在增加了第一版股票特征权重参考，文件在：
+
+- `skills/us-premarket-telegram-reports/references/ticker-catalyst-map.md`
+
+这份参考的作用是：不同股票看不同优先级信号，而不是所有股票统一看同一套新闻。比如：
+
+- `TSLA` -> Musk/Tesla 发帖、交付、FSD/robotaxi、中国定价/交付
+- `AAPL` -> 发布会、供应链、中国需求、硬件/服务周期
+- `NVDA` / `AMD` / `AVGO` / `MU` -> AI 基础设施需求、capex、政策/出口限制、大会/产品周期
+- `VRTX` / 生物科技 -> 临床数据、FDA、监管进展
 
 ## 经验总结
 

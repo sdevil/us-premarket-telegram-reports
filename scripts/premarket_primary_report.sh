@@ -38,6 +38,22 @@ Ranking rules:
 - Penalize candidates lacking a fresh company-specific catalyst.
 - Reward clean trigger levels, strong liquidity, and obvious institutional participation.
 
+Ticker-specific weighting rules:
+- Different stocks have different high-value catalyst sources. Do NOT evaluate all tickers with the same information weighting.
+- Apply ticker-specific logic when relevant:
+  - TSLA: prioritize Elon Musk / Tesla posts, delivery data, FSD / robotaxi, China pricing or delivery news.
+  - AAPL: prioritize product events, launch cycle, supply-chain reporting, China demand, services/hardware-cycle news.
+  - NVDA / AMD / AVGO / MU / SMCI: prioritize AI infrastructure demand, hyperscaler capex, chip policy/export restrictions, conference/product-cycle news.
+  - MSFT / AMZN / ORCL / GOOGL / META: prioritize cloud growth, enterprise AI monetization, ad demand, major business updates.
+  - Biotech/pharma names like VRTX / LLY / REGN: prioritize clinical data, FDA/regulatory outcomes, safety/label/reimbursement changes.
+- For tickers with known special drivers, prefer those signals over generic sector commentary.
+- If a stock lacks its usual high-signal catalyst, downgrade it.
+
+Macro-special-source rules:
+- Consider Trump/policy-style social posts or public statements as macro / policy / sector signals, not automatic single-stock catalysts.
+- If such a post matters, explicitly decide whether it affects the overall market, a sector, or a specific ticker.
+- Re-rank candidates if macro/policy headlines materially change risk appetite, tariff sensitivity, China exposure, regulation, or opening sentiment.
+
 For each candidate, briefly cite the source basis in plain text, for example: 来源依据：Reuters / CNBC / Yahoo Finance / Nasdaq Market Activity.
 
 Output format:

@@ -71,6 +71,8 @@ Enforce all of the following in the automation prompt:
 - do not fabricate market data
 - if premarket levels are unavailable, say so explicitly and use previous-day levels
 - include a Telegram-friendly summary block
+- apply ticker-specific catalyst weighting when relevant instead of treating all names identically
+- interpret Trump/policy-style social posts as macro/sector signals first unless they directly target a single company
 
 ## If OpenClaw cron is broken
 
@@ -91,3 +93,4 @@ If those appear, stop using built-in cron for this workflow and switch to system
 
 ### references/
 - `deployment-notes.md`: operational lessons and known failure modes
+- `ticker-catalyst-map.md`: ticker-specific and macro-special-source weighting guidance

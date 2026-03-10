@@ -41,6 +41,8 @@ Review tasks:
 - State clearly if a Watchlist name should have stayed a watchlist or should have been upgraded.
 - Identify recurring lessons that can improve future reports.
 - Give concrete strategy adjustments for the next session.
+- Evaluate whether ticker-specific drivers were used correctly. Example: TSLA should weight Musk/Tesla signals more; biotech should weight trial/FDA outcomes more.
+- Evaluate whether macro-special-source interpretation was correct. Example: Trump/policy posts should usually affect market/sector weighting before single-stock ranking.
 
 Required output format:
 美股收盘后复盘
@@ -87,6 +89,11 @@ Trigger 调整建议：
 - 提示1
 - 提示2
 - 提示3
+
+Ticker-specific 学习
+哪些股票的自有特性今天最重要：
+哪些股票今天不该套用通用逻辑：
+哪些宏观/政策信号今天改变了排序：
 
 Keep it concise but specific.
 EOF
