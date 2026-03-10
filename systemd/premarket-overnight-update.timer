@@ -1,0 +1,10 @@
+[Unit]
+Description=09:30 New York time weekdays premarket overnight update
+
+[Timer]
+OnCalendar=Mon..Fri 09:30 America/New_York
+Persistent=true
+Unit=premarket-overnight-update.service
+
+[Install]
+WantedBy=timers.target

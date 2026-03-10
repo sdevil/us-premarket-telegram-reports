@@ -1,0 +1,10 @@
+[Unit]
+Description=22:30 NZT weekdays premarket primary report
+
+[Timer]
+OnCalendar=Mon..Fri 22:30 Pacific/Auckland
+Persistent=true
+Unit=premarket-primary-report.service
+
+[Install]
+WantedBy=timers.target
