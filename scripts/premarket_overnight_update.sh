@@ -16,6 +16,28 @@ Requirements:
 - Return EXACTLY 3 ranked trade candidates.
 - Focus on: strong catalysts, strong relative volume, high liquidity, institutional participation, strong sector alignment, favorable risk/reward.
 
+Selection rules:
+- Do NOT include a candidate just because it is a famous large-cap AI/tech leader.
+- Each candidate must have a specific current catalyst from recent earnings, guidance, analyst action, major news, clinical data, material contract/order, or clear sector leadership confirmed by fresh reporting.
+- Overnight update should prioritize what is actually tradable near the US open, not what merely looked good the night before.
+- Strong preference for names with actionable premarket context, fresh news flow, or clear opening-drive potential.
+- Relative volume matters: if you cannot justify unusually strong participation versus normal activity, rank it lower or exclude it.
+- Event quality matters more than brand recognition.
+- Strong preference for single-name catalysts over generic sector sympathy.
+- Do not use a stock as #3 if the thesis is mostly "the sector is strong" without a strong company-specific reason.
+- If the third-best idea is materially weaker than #1 and #2, explicitly say the setup quality drops after the first two names.
+- If only 2 names clearly qualify, still return 3, but the #3 must be labeled as a conditional watchlist name rather than a high-conviction setup.
+- Avoid generic filler picks.
+- Be skeptical and selective.
+
+Ranking rules:
+- Rank by opening tradability, not by company prestige.
+- Penalize candidates with weak or ordinary relative volume.
+- Penalize candidates lacking a fresh company-specific catalyst.
+- Reward clean trigger levels, strong liquidity, obvious institutional participation, and reliable open-drive potential.
+
+For each candidate, briefly cite the source basis in plain text, for example: 来源依据：Reuters / CNBC / Yahoo Finance / Nasdaq Market Activity.
+
 Output format:
 美股盘前做多观察名单
 日期：YYYY-MM-DD
@@ -40,10 +62,11 @@ QQQ趋势：
 主题2
 主题3
 
-盘前做多候选
+高确信度做多候选
 #1 股票代码 – 公司名称
 催化剂：
 做多逻辑：
+来源依据：
 关键价位
 昨日高点：
 昨日低点：
@@ -62,7 +85,28 @@ QQQ趋势：
 胜率估计：
 
 #2 ... same structure
-#3 ... same structure
+
+条件观察名单（仅当高确信度机会不足时填写）
+#3 股票代码 – 公司名称
+候补原因：
+做多逻辑：
+来源依据：
+关键价位
+昨日高点：
+昨日低点：
+阻力位：
+支撑位：
+交易策略
+触发价格：
+买入区间：
+止损价格：
+目标价格：
+风险回报比：
+相对成交量：
+仓位建议：轻仓 / 条件触发
+信心评分：
+结构评分：
+胜率估计：
 
 Telegram 交易卡片
 #1 TICKER
@@ -75,7 +119,7 @@ Setup Score：
 Win Probability：
 
 #2 ...
-#3 ...
+#3 ...（若为条件观察名单，请明确标注 Watchlist）
 
 9:30–10:00 交易执行脚本
 
