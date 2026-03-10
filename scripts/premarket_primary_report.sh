@@ -21,9 +21,18 @@ Selection rules:
 - Prefer names with obvious next-day execution potential rather than generic long-term quality.
 - Relative volume matters: if you cannot justify unusually strong participation versus normal activity, rank it lower or exclude it.
 - Event quality matters more than brand recognition.
-- If only 2 names clearly qualify, still return 3, but make the #3 explicitly lower conviction and explain why it barely made the list.
+- Strong preference for single-name catalysts over generic sector sympathy.
+- Do not use a stock as #3 if the thesis is mostly "the sector is strong" without a strong company-specific reason.
+- If the third-best idea is materially weaker than #1 and #2, explicitly say the setup quality drops after the first two names.
+- If only 2 names clearly qualify, still return 3, but the #3 must be labeled as a conditional watchlist name rather than a high-conviction setup.
 - Avoid generic filler picks.
 - Be skeptical and selective.
+
+Ranking rules:
+- Rank by next-day tradability, not by company prestige.
+- Penalize candidates with weak or ordinary relative volume.
+- Penalize candidates lacking a fresh company-specific catalyst.
+- Reward clean trigger levels, strong liquidity, and obvious institutional participation.
 
 For each candidate, briefly cite the source basis in plain text, for example: 来源依据：Reuters / CNBC / Yahoo Finance / Nasdaq Market Activity.
 
