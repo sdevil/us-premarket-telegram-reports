@@ -15,6 +15,18 @@ Requirements:
 - Return EXACTLY 3 ranked trade candidates.
 - Focus on: strong catalysts, strong relative volume, high liquidity, institutional participation, strong sector alignment, favorable risk/reward.
 
+Selection rules:
+- Do NOT include a candidate just because it is a famous large-cap AI/tech leader.
+- Each candidate must have a specific current catalyst from recent earnings, guidance, analyst action, major news, clinical data, material contract/order, or clear sector leadership confirmed by fresh reporting.
+- Prefer names with obvious next-day execution potential rather than generic long-term quality.
+- Relative volume matters: if you cannot justify unusually strong participation versus normal activity, rank it lower or exclude it.
+- Event quality matters more than brand recognition.
+- If only 2 names clearly qualify, still return 3, but make the #3 explicitly lower conviction and explain why it barely made the list.
+- Avoid generic filler picks.
+- Be skeptical and selective.
+
+For each candidate, briefly cite the source basis in plain text, for example: 来源依据：Reuters / CNBC / Yahoo Finance / Nasdaq Market Activity.
+
 Output format:
 美股盘前做多观察名单
 日期：YYYY-MM-DD
