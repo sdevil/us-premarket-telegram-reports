@@ -85,4 +85,4 @@ Win Probability：
 Keep it concise and readable in under two minutes.
 EOF
 )
-openclaw agent --channel telegram --to "$TELEGRAM_TARGET" --deliver --timeout 600 --message "$PROMPT"
+openclaw agent --agent trading-agent --channel telegram --to "$TELEGRAM_TARGET" --deliver --timeout 600 --message "$PROMPT"
