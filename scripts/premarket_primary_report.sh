@@ -20,6 +20,8 @@ Requirements:
 - Focus only on institutional-quality LONG setups.
 - Stock universe limited to S&P 500 and Nasdaq 100.
 - Use reliable sources: Yahoo Finance, Nasdaq Market Activity, Reuters Markets, CNBC Markets.
+- Use the structured market context above as the default data backbone for market regime, rates, oil, calendar, lightweight quotes, and ticker-news samples.
+- If the structured market context conflicts with a weaker narrative source, prefer the structured market context unless you have a strong reason not to.
 - If premarket data is unavailable, explicitly say unavailable and rely on previous day levels.
 - Return EXACTLY 3 ranked trade candidates.
 - Focus on: strong catalysts, strong relative volume, high liquidity, institutional participation, strong sector alignment, favorable risk/reward.
@@ -62,7 +64,13 @@ Macro-special-source rules:
 - If a macro/geopolitical shock is active, adjust 市场适合度, 交易风险等级, 板块强弱, and confidence in breakout longs.
 - A strong single-stock catalyst does not automatically override a major macro shock.
 
-For each candidate, briefly cite the source basis in plain text, for example: 来源依据：Reuters / CNBC / Yahoo Finance / Nasdaq Market Activity.
+Data-use rules:
+- Use the structured market context first for SPY / QQQ / VIX / rates / oil / macro calendar.
+- Use ticker-news samples as first-pass evidence for names like TSLA / AAPL / NVDA before falling back to broader commentary.
+- If a needed data field is marked unavailable, say unavailable explicitly instead of filling gaps with guesswork.
+- When you mention relative volume or market conditions, anchor them to the provided context when possible.
+
+For each candidate, briefly cite the source basis in plain text, for example: 来源依据：Reuters / CNBC / Yahoo Finance / Nasdaq Market Activity / Finnhub / FRED / Trading Economics / EIA.
 
 Output format:
 美股盘前做多观察名单
