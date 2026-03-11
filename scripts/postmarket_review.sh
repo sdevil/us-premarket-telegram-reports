@@ -34,6 +34,7 @@ Use the structured market context above as the default backbone for index/rates/
 Final output must be entirely in Simplified Chinese except ticker symbols and terms like VIX, SPY, QQQ, VWAP, R/R, MFE, MAE.
 Focus only on LONG setups from the S&P 500 and Nasdaq 100 universe.
 Do not fabricate price action. If any data is unavailable, say unavailable explicitly.
+Include yesterday and today open/close values for each reviewed ticker when available.
 
 Today's primary report:
 ${PRIMARY_CONTENT}
@@ -68,6 +69,10 @@ VIX：
 
 盘前建议复盘
 #1 股票代码 – 结果评级（优秀 / 合格 / 失败）
+昨日开盘价：
+昨日收盘价：
+今日开盘价：
+今日收盘价：
 是否触发：
 开盘后表现：
 收盘结果：
