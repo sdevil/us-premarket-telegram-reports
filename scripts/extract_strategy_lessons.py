@@ -39,22 +39,39 @@ def append_markdown(lessons_path: Path, trade_date: str, durable_items: list[str
         f.write("\n".join(chunk))
 
 
+def classify_text(text: str) -> tuple[str | None, str | None]:
+    upper = text.upper()
+    ticker = None
+    for candidate in ["TSLA", "AAPL", "NVDA", "ORCL", "VRTX", "MU", "AVGO", "AMD", "SMCI", "META", "AMZN", "MSFT", "GOOGL", "LLY", "REGN"]:
+        if candidate in upper:
+            ticker = candidate
+            break
+    category = None
+    lower = text.lower()
+    if any(k in lower for k in ["macro", "油价", "中东", "伊朗", "fed", "rates", "关税", "sanction", "vix"]):
+        category = "macro_regime"
+    elif any(k in lower for k in ["trial", "fda", "clinical", "临床", "监管"]):
+        category = "biotech_regulatory"
+    elif any(k in lower for k in ["musk", "tesla", "robotaxi", "fsd"]):
+        category = "ticker_specific_tsla"
+    elif any(k in lower for k in ["volume", "breakout", "突破", "vwap", "trigger", "开盘"]):
+        category = "structure_execution"
+    return ticker, category
+
+
 def append_jsonl(jsonl_path: Path, trade_date: str, durable_items: list[str], watch_items: list[str]) -> None:
     with jsonl_path.open("a", encoding="utf-8") as f:
-        for item in durable_items:
-            rec = {
-                "date": trade_date,
-                "kind": "reusable_lesson",
-                "text": item,
-            }
-            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
-        for item in watch_items:
-            rec = {
-                "date": trade_date,
-                "kind": "future_watchpoint",
-                "text": item,
-            }
-            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+        for kind, items in [("reusable_lesson", durable_items), ("future_watchpoint", watch_items)]:
+            for item in items:
+                ticker, category = classify_text(item)
+                rec = {
+                    "date": trade_date,
+                    "kind": kind,
+                    "text": item,
+                    "ticker": ticker,
+                    "category": category,
+                }
+                f.write(json.dumps(rec, ensure_ascii=False) + "\n")
 
 
 def main() -> int:

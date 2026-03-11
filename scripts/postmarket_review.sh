@@ -88,6 +88,18 @@ MAE：
 最差 setup：
 原因：
 
+复盘摘要（结构化）
+best_setup:
+worst_setup:
+main_mismatch_categories:
+- 
+- 
+- 
+next_session_adjustments:
+- 
+- 
+- 
+
 策略学习
 今天学到的 3 条：
 1.

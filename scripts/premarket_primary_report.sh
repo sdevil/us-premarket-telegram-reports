@@ -142,6 +142,22 @@ QQQ趋势：
 结构评分：
 胜率估计：
 
+预测摘要（结构化）
+market_suitability:
+risk_level:
+macro_drivers:
+- 
+- 
+- 
+high_conviction_tickers:
+- 
+- 
+watchlist_ticker:
+prediction_notes:
+- 
+- 
+- 
+
 Telegram 交易卡片
 #1 TICKER
 Trigger：
