@@ -6,8 +6,13 @@ TRADE_DATE="$(TZ=America/New_York date +%F)"
 REPORT_DIR="${REPORT_DIR:-$(pwd)/reports}"
 mkdir -p "$REPORT_DIR"
 OUTFILE="$REPORT_DIR/${TRADE_DATE}-overnight.md"
-PROMPT=$(cat <<'EOF'
+source "$(pwd)/scripts/common_env.sh"
+MARKET_CONTEXT="$(python3 "$(pwd)/scripts/build_market_context.py" premarket)"
+PROMPT=$(cat <<EOF
 Update the US premarket long watchlist before the US market opens.
+
+Structured market context (use this first; supplement with fresh English financial sources as needed):
+${MARKET_CONTEXT}
 
 Requirements:
 - Research only from English financial sources.

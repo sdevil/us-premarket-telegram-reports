@@ -210,6 +210,21 @@ The review flow now also appends extracted durable lessons into:
 
 - `skills/us-premarket-telegram-reports/references/strategy-lessons.md`
 
+### Connected data layer
+
+The workflow now includes a local structured market-context step powered by connected APIs.
+Current priority and fallback rules are documented in:
+
+- `skills/us-premarket-telegram-reports/references/data-source-priority.md`
+
+The scripts currently use:
+- Finnhub for lightweight quote/news context
+- FRED for rates
+- Trading Economics for macro calendar
+- EIA for oil context
+- Polygon as optional aggregate fallback
+- Twelve Data / Alpha Vantage as supplemental quote/market-data backups
+
 ## Lessons learned
 
 ### 1. Delivery path matters more than scheduling elegance

@@ -209,6 +209,20 @@ systemctl --user enable --now premarket-overnight-update.timer
 
 - `skills/us-premarket-telegram-reports/references/strategy-lessons.md`
 
+### 已接入的数据层
+
+这套流程现在已经增加了本地结构化 market context 步骤，并有明确的数据源优先级和 fallback 规则，写在：
+
+- `skills/us-premarket-telegram-reports/references/data-source-priority.md`
+
+当前实际使用的方向包括：
+- Finnhub：轻量行情与 ticker news
+- FRED：利率/宏观利差背景
+- Trading Economics：宏观日历
+- EIA：油价/能源背景
+- Polygon：可选 aggregate fallback
+- Twelve Data / Alpha Vantage：补充行情备份
+
 ## 经验总结
 
 ### 1. 投递链路比调度形式更重要

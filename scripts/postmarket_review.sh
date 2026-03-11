@@ -17,8 +17,13 @@ if [[ -f "$OVERNIGHT_FILE" ]]; then
 else
   OVERNIGHT_CONTENT="No overnight update file was found for this trade date. Review the primary report and actual market action anyway."
 fi
+source "$(pwd)/scripts/common_env.sh"
+MARKET_CONTEXT="$(python3 "$(pwd)/scripts/build_market_context.py" review)"
 PROMPT=$(cat <<EOF
 Review today's US equities trading session after the market close and evaluate the premarket recommendations.
+
+Structured market context (use this for index/rates/oil/macro context; supplement with fresh English financial sources as needed):
+${MARKET_CONTEXT}
 
 Trade date: ${TRADE_DATE}
 
