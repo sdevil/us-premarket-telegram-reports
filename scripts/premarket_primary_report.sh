@@ -7,7 +7,9 @@ REPORT_DIR="${REPORT_DIR:-$(pwd)/reports}"
 mkdir -p "$REPORT_DIR"
 OUTFILE="$REPORT_DIR/${TRADE_DATE}-primary.md"
 source "$(pwd)/scripts/common_env.sh"
-MARKET_CONTEXT="$(python3 "$(pwd)/scripts/build_market_context.py" premarket)"
+MARKET_CONTEXT_FILE="$(mktemp)"
+python3 "$(pwd)/scripts/build_market_context.py" premarket > "$MARKET_CONTEXT_FILE"
+MARKET_CONTEXT="$(cat "$MARKET_CONTEXT_FILE")"
 PROMPT=$(cat <<EOF
 Generate the next US trading day long watchlist.
 
@@ -67,7 +69,14 @@ Macro-special-source rules:
 Data-use rules:
 - Use the structured market context first for SPY / QQQ / VIX / rates / oil / macro calendar.
 - Use ticker-news samples as first-pass evidence for names like TSLA / AAPL / NVDA before falling back to broader commentary.
-- If a needed data field is marked unavailable, say unavailable explicitly instead of filling gaps with guesswork.
+- Use daily_ohlc from the structured context as the strict source for 昨日开盘价 / 昨日收盘价 / 昨日高点 / 昨日低点.
+- Do NOT guess, infer, or synthesize OHLC numbers from prose sources.
+- If a needed OHLC field is marked unavailable or missing in structured data, write unavailable explicitly.
+- In narrative sections such as 做多逻辑 / 开盘备注 / 关键观察点, do NOT restate numeric OHLC values unless they exactly match the structured daily_ohlc values.
+- Do not describe yesterday's session with numeric open/high/low/close sentences unless the values come directly from structured daily_ohlc.previous.
+- Treat 阻力位 / 支撑位 / 触发价格 / 买入区间 / 止损价格 / 目标价格 as analysis fields, not historical facts.
+- Historical fact fields are limited to: 昨日开盘价 / 昨日收盘价 / 昨日高点 / 昨日低点.
+- Never reuse latest quote or intraday values inside those historical fact fields.
 - When you mention relative volume or market conditions, anchor them to the provided context when possible.
 
 For each candidate, briefly cite the source basis in plain text, for example: 来源依据：Reuters / CNBC / Yahoo Finance / Nasdaq Market Activity / Finnhub / FRED / Trading Economics / EIA.
@@ -101,11 +110,12 @@ QQQ趋势：
 催化剂：
 做多逻辑：
 来源依据：
-关键价位
+关键价位（历史事实）
 昨日开盘价：
 昨日收盘价：
 昨日高点：
 昨日低点：
+分析型价位（不是历史事实）
 阻力位：
 支撑位：
 交易策略
@@ -127,11 +137,12 @@ QQQ趋势：
 候补原因：
 做多逻辑：
 来源依据：
-关键价位
+关键价位（历史事实）
 昨日开盘价：
 昨日收盘价：
 昨日高点：
 昨日低点：
+分析型价位（不是历史事实）
 阻力位：
 支撑位：
 交易策略
@@ -185,5 +196,9 @@ EOF
 )
 OUTPUT="$(openclaw agent --agent trading-agent --timeout 600 --message "$PROMPT")"
 printf '%s\n' "$OUTPUT" | tee "$OUTFILE" >/dev/null
-openclaw message send --channel telegram --target "$TELEGRAM_TARGET" --message "$OUTPUT"
+python3 "$(pwd)/scripts/enforce_report_prices.py" "$OUTFILE" "$MARKET_CONTEXT_FILE"
+python3 "$(pwd)/scripts/strip_untrusted_price_sentences.py" "$OUTFILE"
+FINAL_OUTPUT="$(cat "$OUTFILE")"
+openclaw message send --channel telegram --target "$TELEGRAM_TARGET" --message "$FINAL_OUTPUT"
 printf 'Saved primary report to %s\n' "$OUTFILE"
+rm -f "$MARKET_CONTEXT_FILE"

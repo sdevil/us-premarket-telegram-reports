@@ -19,7 +19,9 @@ else
   OVERNIGHT_CONTENT="No overnight update file was found for this trade date. Review the primary report and actual market action anyway."
 fi
 source "$(pwd)/scripts/common_env.sh"
-MARKET_CONTEXT="$(python3 "$(pwd)/scripts/build_market_context.py" review)"
+MARKET_CONTEXT_FILE="$(mktemp)"
+python3 "$(pwd)/scripts/build_market_context.py" review > "$MARKET_CONTEXT_FILE"
+MARKET_CONTEXT="$(cat "$MARKET_CONTEXT_FILE")"
 PROMPT=$(cat <<EOF
 Review today's US equities trading session after the market close and evaluate the premarket recommendations.
 
@@ -35,6 +37,9 @@ Final output must be entirely in Simplified Chinese except ticker symbols and te
 Focus only on LONG setups from the S&P 500 and Nasdaq 100 universe.
 Do not fabricate price action. If any data is unavailable, say unavailable explicitly.
 Include yesterday and today open/close values for each reviewed ticker when available.
+Use daily_ohlc from structured data as the strict source for yesterday/today OHLC fields when available, and never guess these numbers from prose or memory.
+Historical fact fields in review are limited to: 昨日开盘价 / 昨日收盘价 / 今日开盘价 / 今日收盘价.
+Treat all other levels or execution notes as analysis rather than historical facts.
 
 Today's primary report:
 ${PRIMARY_CONTENT}
@@ -136,8 +141,11 @@ EOF
 )
 OUTPUT="$(openclaw agent --agent trading-agent --timeout 900 --message "$PROMPT")"
 printf '%s\n' "$OUTPUT" | tee "$OUTFILE" >/dev/null
+python3 "$(pwd)/scripts/enforce_review_prices.py" "$OUTFILE" "$MARKET_CONTEXT_FILE"
 python3 "$(pwd)/scripts/extract_strategy_lessons.py" "$OUTFILE" "$LESSONS_FILE" "$LESSONS_JSONL"
-openclaw message send --channel telegram --target "$TELEGRAM_TARGET" --message "$OUTPUT"
+FINAL_OUTPUT="$(cat "$OUTFILE")"
+openclaw message send --channel telegram --target "$TELEGRAM_TARGET" --message "$FINAL_OUTPUT"
 printf 'Saved post-market review to %s\n' "$OUTFILE"
 printf 'Updated strategy lessons at %s\n' "$LESSONS_FILE"
 printf 'Updated structured lessons at %s\n' "$LESSONS_JSONL"
+rm -f "$MARKET_CONTEXT_FILE"

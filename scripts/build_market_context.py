@@ -12,6 +12,7 @@ from data_sources import (
     fred_latest,
     load_env,
     polygon_prev,
+    strict_daily_ohlc,
     te_calendar,
 )
 
@@ -20,9 +21,11 @@ def main() -> int:
     load_env()
     mode = sys.argv[1] if len(sys.argv) > 1 else 'premarket'
     out = {}
-    for sym in ['SPY', 'QQQ', 'NVDA', 'AAPL', 'TSLA', 'ORCL', 'VRTX']:
+    tracked = ['SPY', 'QQQ', 'NVDA', 'AAPL', 'TSLA', 'ORCL', 'VRTX']
+    for sym in tracked:
         out[sym] = {
             'quote': best_effort(finnhub_quote, sym),
+            'daily_ohlc': best_effort(strict_daily_ohlc, sym),
         }
     for sym in ['SPY', 'QQQ']:
         out[sym]['prev'] = best_effort(polygon_prev, sym)
@@ -36,6 +39,8 @@ def main() -> int:
     out['context_notes'] = [
         'Polygon prev data is optional fallback only; do not fail the whole report if it is unavailable or rate-limited.',
         'Use Finnhub quote as the primary lightweight market snapshot source.',
+        'Use daily_ohlc from Twelve Data as the primary strict source for yesterday/today open, high, low, close fields when available.',
+        'Do not invent or infer OHLC values. If daily_ohlc is unavailable, the report must say unavailable. Alpha Vantage is fallback only for OHLC.',
     ]
     out['rates'] = {
         'DGS10': best_effort(fred_latest, 'DGS10'),
