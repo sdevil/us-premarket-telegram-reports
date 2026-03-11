@@ -59,6 +59,20 @@ systemctl --user enable --now premarket-overnight-update.timer
 systemctl --user list-timers --all | grep 'premarket-'
 ```
 
+## Hard rule: data integrity
+
+All analysis and review must use real data.
+
+Never:
+- invent prices or market statistics
+- guess missing numeric values from prose
+- present analysis levels as if they were historical facts
+
+Always:
+- use structured data when available
+- mark unavailable data explicitly
+- prefer programmatic enforcement for historical fact fields when possible
+
 ## Prompt constraints
 
 Enforce all of the following in the automation prompt:

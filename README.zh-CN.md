@@ -147,6 +147,17 @@ systemctl --user enable --now premarket-primary-report.timer
 systemctl --user enable --now premarket-overnight-update.timer
 ```
 
+## 硬性数据规则
+
+这套系统在分析和复盘时，所有数据都必须来自真实数据源或明确引用的可靠来源。
+
+不可违反的规则：
+- 绝不编造价格、OHLC、成交量、相对成交量、VIX、利率、油价或宏观事件数值
+- 绝不根据叙事、猜测或上下文去补缺失数字
+- 只要关键数据拿不到，就必须写 `unavailable`
+- 历史事实字段必须有结构化数据支撑，并优先用程序强制校正
+- 分析型价位不能冒充历史事实
+
 ## Prompt 设计原则
 
 报告 prompt 明确要求：

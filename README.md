@@ -147,6 +147,17 @@ systemctl --user enable --now premarket-primary-report.timer
 systemctl --user enable --now premarket-overnight-update.timer
 ```
 
+## Hard data integrity rule
+
+All analysis and review in this system must use real data from structured sources or explicitly cited reliable sources.
+
+Non-negotiable rules:
+- never invent prices, OHLC, volume, relative volume, VIX, rates, oil, or macro event values
+- never fill missing numeric fields by guessing from narrative context
+- if a required data point is unavailable, say `unavailable`
+- historical fact fields must be backed by structured data and should be enforced programmatically when possible
+- analysis fields must not be mislabeled as historical facts
+
 ## Prompt design principles
 
 The report prompt explicitly requires:
