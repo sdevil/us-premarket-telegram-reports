@@ -6,6 +6,7 @@ TRADE_DATE="${TRADE_DATE:-$(TZ=America/New_York date +%F)}"
 REPORT_DIR="${REPORT_DIR:-$(pwd)/reports}"
 REVIEW_DIR="${REVIEW_DIR:-$(pwd)/reviews}"
 LESSONS_FILE="${LESSONS_FILE:-$(pwd)/skills/us-premarket-telegram-reports/references/strategy-lessons.md}"
+LESSONS_JSONL="${LESSONS_JSONL:-$(pwd)/skills/us-premarket-telegram-reports/references/strategy-lessons.jsonl}"
 mkdir -p "$REPORT_DIR" "$REVIEW_DIR"
 PRIMARY_FILE="$REPORT_DIR/${TRADE_DATE}-primary.md"
 OVERNIGHT_FILE="$REPORT_DIR/${TRADE_DATE}-overnight.md"
@@ -118,7 +119,8 @@ EOF
 )
 OUTPUT="$(openclaw agent --agent trading-agent --timeout 900 --message "$PROMPT")"
 printf '%s\n' "$OUTPUT" | tee "$OUTFILE" >/dev/null
-python3 "$(pwd)/scripts/extract_strategy_lessons.py" "$OUTFILE" "$LESSONS_FILE"
+python3 "$(pwd)/scripts/extract_strategy_lessons.py" "$OUTFILE" "$LESSONS_FILE" "$LESSONS_JSONL"
 openclaw message send --channel telegram --target "$TELEGRAM_TARGET" --message "$OUTPUT"
 printf 'Saved post-market review to %s\n' "$OUTFILE"
 printf 'Updated strategy lessons at %s\n' "$LESSONS_FILE"
+printf 'Updated structured lessons at %s\n' "$LESSONS_JSONL"

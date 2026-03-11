@@ -92,11 +92,17 @@ If those appear, stop using built-in cron for this workflow and switch to system
 ### scripts/
 - `premarket_primary_report.sh`: sends the evening primary report
 - `premarket_overnight_update.sh`: sends the overnight refresh
+- `postmarket_review.sh`: sends the post-close review and updates long-term lessons
+- `build_market_context.py`: builds structured market context from connected providers
+- `data_sources.py`: shared provider access layer used by market-context generation
+- `extract_strategy_lessons.py`: extracts durable lessons into Markdown + JSONL memory files
 
 ### references/
 - `deployment-notes.md`: operational lessons and known failure modes
 - `ticker-catalyst-map.md`: ticker-specific and macro-special-source weighting guidance
 - `macro-geopolitical-map.md`: top-down market regime and geopolitical impact guidance
 - `strategy-lessons.md`: durable lessons and reusable watchpoints extracted from review
+- `strategy-lessons.jsonl`: structured lesson records for machine-friendly analysis
+- `data-source-priority.md`: provider priority and fallback rules for the connected data layer
 
-Use `scripts/extract_strategy_lessons.py` when you want to append durable lessons from a post-market review into the long-term strategy memory file.
+Use `scripts/extract_strategy_lessons.py` when you want to append durable lessons from a post-market review into the long-term strategy memory files.

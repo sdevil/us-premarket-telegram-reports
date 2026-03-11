@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import json
 import re
 import sys
 from pathlib import Path
@@ -27,13 +28,43 @@ def extract_bullets(block: str) -> list[str]:
     return lines
 
 
+def append_markdown(lessons_path: Path, trade_date: str, durable_items: list[str], watch_items: list[str]) -> None:
+    chunk = [f"\n### {trade_date}"]
+    for item in durable_items:
+        chunk.append(f"- Reusable lesson: {item}")
+    for item in watch_items:
+        chunk.append(f"- Future watchpoint: {item}")
+    chunk.append("")
+    with lessons_path.open("a", encoding="utf-8") as f:
+        f.write("\n".join(chunk))
+
+
+def append_jsonl(jsonl_path: Path, trade_date: str, durable_items: list[str], watch_items: list[str]) -> None:
+    with jsonl_path.open("a", encoding="utf-8") as f:
+        for item in durable_items:
+            rec = {
+                "date": trade_date,
+                "kind": "reusable_lesson",
+                "text": item,
+            }
+            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+        for item in watch_items:
+            rec = {
+                "date": trade_date,
+                "kind": "future_watchpoint",
+                "text": item,
+            }
+            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+
+
 def main() -> int:
-    if len(sys.argv) != 3:
-        print("Usage: extract_strategy_lessons.py <review-file> <strategy-lessons-file>", file=sys.stderr)
+    if len(sys.argv) not in {3, 4}:
+        print("Usage: extract_strategy_lessons.py <review-file> <strategy-lessons-file> [strategy-lessons-jsonl]", file=sys.stderr)
         return 2
 
     review_path = Path(sys.argv[1])
     lessons_path = Path(sys.argv[2])
+    jsonl_path = Path(sys.argv[3]) if len(sys.argv) == 4 else None
     text = review_path.read_text(encoding="utf-8")
 
     date_match = re.search(r"日期：\s*(\d{4}-\d{2}-\d{2})", text)
@@ -42,7 +73,6 @@ def main() -> int:
     durable = extract_section(text, "长期规则候选")
     watchpoints = extract_section(text, "未来需要持续跟踪的关注点：")
     if not watchpoints:
-        # fallback if captured inside same section or not present as own heading
         tail = text.split("长期规则候选", 1)[-1] if "长期规则候选" in text else ""
         m = re.search(r"未来需要持续跟踪的关注点：\n(.*)$", tail, re.S)
         watchpoints = m.group(1).strip() if m else ""
@@ -54,19 +84,13 @@ def main() -> int:
         print("No durable lessons found; nothing appended.")
         return 0
 
-    chunk = [f"\n### {trade_date}"]
-    if durable_items:
-        for item in durable_items:
-            chunk.append(f"- Reusable lesson: {item}")
-    if watch_items:
-        for item in watch_items:
-            chunk.append(f"- Future watchpoint: {item}")
-    chunk.append("")
-
-    with lessons_path.open("a", encoding="utf-8") as f:
-        f.write("\n".join(chunk))
+    append_markdown(lessons_path, trade_date, durable_items, watch_items)
+    if jsonl_path is not None:
+        append_jsonl(jsonl_path, trade_date, durable_items, watch_items)
 
     print(f"Appended lessons for {trade_date} to {lessons_path}")
+    if jsonl_path is not None:
+        print(f"Updated structured lessons at {jsonl_path}")
     return 0
 
 

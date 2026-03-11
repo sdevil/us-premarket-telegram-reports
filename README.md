@@ -209,6 +209,9 @@ It now asks for:
 The review flow now also appends extracted durable lessons into:
 
 - `skills/us-premarket-telegram-reports/references/strategy-lessons.md`
+- `skills/us-premarket-telegram-reports/references/strategy-lessons.jsonl`
+
+The Markdown file is for human review; the JSONL file is for future structured analysis by ticker, regime, or lesson type.
 
 ### Connected data layer
 
@@ -224,6 +227,12 @@ The scripts currently use:
 - EIA for oil context
 - Polygon as optional aggregate fallback
 - Twelve Data / Alpha Vantage as supplemental quote/market-data backups
+
+To keep provider logic maintainable, shared data access now lives in:
+
+- `scripts/data_sources.py`
+
+This module centralizes provider calls and best-effort fallback handling for the market-context builder.
 
 ## Lessons learned
 

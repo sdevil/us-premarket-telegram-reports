@@ -208,6 +208,9 @@ systemctl --user enable --now premarket-overnight-update.timer
 并且复盘流程现在会自动把提取出的长期经验追加到：
 
 - `skills/us-premarket-telegram-reports/references/strategy-lessons.md`
+- `skills/us-premarket-telegram-reports/references/strategy-lessons.jsonl`
+
+其中 Markdown 方便人看，JSONL 方便后续按 ticker / 宏观环境 / lesson 类型做结构化分析。
 
 ### 已接入的数据层
 
@@ -222,6 +225,12 @@ systemctl --user enable --now premarket-overnight-update.timer
 - EIA：油价/能源背景
 - Polygon：可选 aggregate fallback
 - Twelve Data / Alpha Vantage：补充行情备份
+
+为了让 provider 调用更容易维护，现在统一数据访问层收敛在：
+
+- `scripts/data_sources.py`
+
+这个模块负责集中管理 provider 调用和 best-effort 容错。
 
 ## 经验总结
 
