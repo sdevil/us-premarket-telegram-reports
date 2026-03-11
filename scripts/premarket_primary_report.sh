@@ -77,6 +77,8 @@ Data-use rules:
 - Treat 阻力位 / 支撑位 / 触发价格 / 买入区间 / 止损价格 / 目标价格 as analysis fields, not historical facts.
 - Historical fact fields are limited to: 昨日开盘价 / 昨日收盘价 / 昨日高点 / 昨日低点.
 - Never reuse latest quote or intraday values inside those historical fact fields.
+- Explicitly distinguish between setups suitable for active monitoring and setups suitable for non-monitoring execution.
+- For 非盯盘可执行性, prefer only setups with clearer mechanical execution and less dependence on opening microstructure.
 - When you mention relative volume or market conditions, anchor them to the provided context when possible.
 
 For each candidate, briefly cite the source basis in plain text, for example: 来源依据：Reuters / CNBC / Yahoo Finance / Nasdaq Market Activity / Finnhub / FRED / Trading Economics / EIA.
@@ -110,6 +112,9 @@ QQQ趋势：
 催化剂：
 做多逻辑：
 来源依据：
+盯盘可执行性：高 / 中 / 低
+非盯盘可执行性：高 / 中 / 低
+建议执行方式：非盯盘可做 / 需要盯盘确认 / 仅观察
 关键价位（历史事实）
 昨日开盘价：
 昨日收盘价：
@@ -137,6 +142,9 @@ QQQ趋势：
 候补原因：
 做多逻辑：
 来源依据：
+盯盘可执行性：高 / 中 / 低
+非盯盘可执行性：高 / 中 / 低
+建议执行方式：非盯盘可做 / 需要盯盘确认 / 仅观察
 关键价位（历史事实）
 昨日开盘价：
 昨日收盘价：

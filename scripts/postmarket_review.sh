@@ -58,6 +58,7 @@ Review tasks:
 - Evaluate whether ticker-specific drivers were used correctly. Example: TSLA should weight Musk/Tesla signals more; biotech should weight trial/FDA outcomes more.
 - Evaluate whether macro-special-source interpretation was correct. Example: Trump/policy posts should usually affect market/sector weighting before single-stock ranking.
 - Evaluate whether the structured market context was used correctly or ignored when it should have been decisive.
+- Evaluate separately whether the setup was more suitable for active monitoring or non-monitoring execution.
 - For every meaningful mismatch between forecast and reality, identify the main reason category: macro regime mismatch, sector mismatch, ticker-specific catalyst mismatch, structure/volume mismatch, or execution-rule mismatch.
 - Convert the mismatch into future watchpoints that should matter next time this stock or setup appears.
 - When a lesson feels durable, write it as a reusable rule instead of a one-off comment.
@@ -78,6 +79,10 @@ VIX：
 昨日收盘价：
 今日开盘价：
 今日收盘价：
+今日高点：
+今日低点：
+盯盘版结果：
+非盯盘版结果：
 是否触发：
 开盘后表现：
 收盘结果：
@@ -105,6 +110,8 @@ main_mismatch_categories:
 - 
 - 
 - 
+monitoring_suitability_summary:
+non_monitoring_suitability_summary:
 next_session_adjustments:
 - 
 - 
