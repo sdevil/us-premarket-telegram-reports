@@ -59,6 +59,7 @@ Review tasks:
 - Evaluate whether macro-special-source interpretation was correct. Example: Trump/policy posts should usually affect market/sector weighting before single-stock ranking.
 - Evaluate whether the structured market context was used correctly or ignored when it should have been decisive.
 - Evaluate separately whether the setup was more suitable for active monitoring or non-monitoring execution.
+- Evaluate whether each stock was assigned to the correct execution track.
 - For every meaningful mismatch between forecast and reality, identify the main reason category: macro regime mismatch, sector mismatch, ticker-specific catalyst mismatch, structure/volume mismatch, or execution-rule mismatch.
 - Convert the mismatch into future watchpoints that should matter next time this stock or setup appears.
 - When a lesson feels durable, write it as a reusable rule instead of a one-off comment.
@@ -73,7 +74,7 @@ QQQ：
 VIX：
 市场环境总结：
 
-盘前建议复盘
+机器人 / 盯盘轨道复盘
 #1 股票代码 – 结果评级（优秀 / 合格 / 失败）
 昨日开盘价：
 昨日收盘价：
@@ -82,6 +83,28 @@ VIX：
 今日高点：
 今日低点：
 盯盘版结果：
+是否触发：
+开盘后表现：
+收盘结果：
+MFE：
+MAE：
+判断问题：
+执行问题：
+偏差归因类别：
+导致出入的核心原因：
+下次再做这只股票/这类 setup 时要多看什么：
+复盘结论：
+
+#2 ... same structure
+
+非盯盘手动轨道复盘
+#1 股票代码 – 结果评级（优秀 / 合格 / 失败）
+昨日开盘价：
+昨日收盘价：
+今日开盘价：
+今日收盘价：
+今日高点：
+今日低点：
 非盯盘版结果：
 是否触发：
 开盘后表现：
@@ -96,7 +119,6 @@ MAE：
 复盘结论：
 
 #2 ... same structure
-#3 ... same structure
 
 今日最佳与最差
 最佳 setup：
