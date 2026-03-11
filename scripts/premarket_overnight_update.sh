@@ -24,7 +24,10 @@ Requirements:
 - Use the structured market context above as the default data backbone for market regime, rates, oil, calendar, lightweight quotes, and ticker-news samples.
 - If the structured market context conflicts with a weaker narrative source, prefer the structured market context unless you have a strong reason not to.
 - If premarket data is unavailable, explicitly say unavailable and rely on previous day levels.
-- Return EXACTLY 3 ranked trade candidates.
+- Return trade ideas in TWO tracks, not a single mixed list.
+- Track A: 机器人 / 盯盘执行候选.
+- Track B: 非盯盘手动执行候选.
+- Each track may contain 0 to 2 names depending on quality. Do not force low-quality filler.
 - Focus on: strong catalysts, strong relative volume, high liquidity, institutional participation, strong sector alignment, favorable risk/reward.
 
 Selection rules:
@@ -76,6 +79,8 @@ Data-use rules:
 - Historical fact fields are limited to: 昨日开盘价 / 昨日收盘价 / 昨日高点 / 昨日低点.
 - Explicitly distinguish between setups suitable for active monitoring and setups suitable for non-monitoring execution.
 - For 非盯盘可执行性, prefer only setups with clearer mechanical execution and less dependence on opening microstructure.
+- A setup can be strong for机器人/盯盘执行 while being unsuitable for非盯盘手动执行; do not force both tracks to select the same names.
+- Rank candidates separately inside each track.
 - When you mention relative volume or market conditions, anchor them to the provided context when possible.
 
 For each candidate, briefly cite the source basis in plain text, for example: 来源依据：Reuters / CNBC / Yahoo Finance / Nasdaq Market Activity / Finnhub / FRED / Trading Economics / EIA.
@@ -104,7 +109,36 @@ QQQ趋势：
 主题2
 主题3
 
-高确信度做多候选
+机器人 / 盯盘执行候选
+#1 股票代码 – 公司名称
+催化剂：
+做多逻辑：
+来源依据：
+盯盘可执行性：高 / 中 / 低
+非盯盘可执行性：高 / 中 / 低
+建议执行方式：机器人执行 / 需要盯盘确认 / 仅观察
+关键价位（历史事实）
+昨日开盘价：
+昨日收盘价：
+昨日高点：
+昨日低点：
+分析型价位（不是历史事实）
+阻力位：
+支撑位：
+盯盘操作策略：
+触发条件：
+失效条件：
+动态止盈止损思路：
+风险回报比：
+相对成交量：
+仓位建议：
+信心评分：
+结构评分：
+胜率估计：
+
+#2 ... same structure
+
+非盯盘手动执行候选
 #1 股票代码 – 公司名称
 催化剂：
 做多逻辑：
@@ -120,11 +154,11 @@ QQQ趋势：
 分析型价位（不是历史事实）
 阻力位：
 支撑位：
-交易策略
-触发价格：
-买入区间：
-止损价格：
-目标价格：
+非盯盘执行方案：
+机械触发价格：
+机械买入区间：
+机械止损价格：
+机械目标价格：
 风险回报比：
 相对成交量：
 仓位建议：
@@ -134,33 +168,9 @@ QQQ趋势：
 
 #2 ... same structure
 
-条件观察名单（仅当高确信度机会不足时填写）
-#3 股票代码 – 公司名称
-候补原因：
-做多逻辑：
-来源依据：
-盯盘可执行性：高 / 中 / 低
-非盯盘可执行性：高 / 中 / 低
-建议执行方式：非盯盘可做 / 需要盯盘确认 / 仅观察
-关键价位（历史事实）
-昨日开盘价：
-昨日收盘价：
-昨日高点：
-昨日低点：
-分析型价位（不是历史事实）
-阻力位：
-支撑位：
-交易策略
-触发价格：
-买入区间：
-止损价格：
-目标价格：
-风险回报比：
-相对成交量：
-仓位建议：轻仓 / 条件触发
-信心评分：
-结构评分：
-胜率估计：
+仅观察名单（可选）
+#1 股票代码 – 公司名称
+原因：
 
 预测摘要（结构化）
 market_suitability:
@@ -169,7 +179,10 @@ macro_drivers:
 - 
 - 
 - 
-high_conviction_tickers:
+monitoring_candidates:
+- 
+- 
+non_monitoring_candidates:
 - 
 - 
 watchlist_ticker:
@@ -179,6 +192,7 @@ prediction_notes:
 - 
 
 Telegram 交易卡片
+机器人候选
 #1 TICKER
 Trigger：
 Entry：
@@ -188,10 +202,19 @@ Size：
 Setup Score：
 Win Probability：
 
-#2 ...
-#3 ...（若为条件观察名单，请明确标注 Watchlist）
+非盯盘候选
+#1 TICKER
+Trigger：
+Entry：
+Stop：
+Target：
+Size：
+Setup Score：
+Win Probability：
 
-9:30–10:00 交易执行脚本
+开盘执行要点
+机器人轨道：
+非盯盘轨道：
 
 开盘备注
 关键观察点
