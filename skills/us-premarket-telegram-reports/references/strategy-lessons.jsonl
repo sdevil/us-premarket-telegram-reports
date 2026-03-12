@@ -7,3 +7,21 @@
 {"date": "2026-03-11", "kind": "reusable_lesson", "text": "biotech单股催化第二天是否继续可做，必须先看XBI是否同向确认；XBI转弱时默认降级", "ticker": null, "category": "biotech_regulatory"}
 {"date": "2026-03-11", "kind": "reusable_lesson", "text": "在SPY走弱、油价高、SMH强、XBI弱的环境下，优先AI基础设施强股，降低biotech和弱催化票权重", "ticker": null, "category": "macro_regime"}
 {"date": "2026-03-11", "kind": "track_assignment_lesson", "text": "强财报跳空股优先归入机器人轨道；缺少硬催化与异常量的权重股默认留在Watchlist，不升级为主交易标的", "ticker": null, "category": "track_assignment"}
+{"date": "2026-03-11", "kind": "reusable_lesson", "text": "缺少结构化OHLC或硬催化证据的候选，不给具体交易参数，直接写 unavailable", "ticker": null, "category": null}
+{"date": "2026-03-11", "kind": "reusable_lesson", "text": "财报股若隔夜大幅越过原Trigger，次日执行统一切换为 gap-and-go 框架", "ticker": null, "category": "structure_execution"}
+{"date": "2026-03-11", "kind": "reusable_lesson", "text": "biotech单股催化第二天是否继续可做，必须先看XBI是否同向确认", "ticker": null, "category": null}
+{"date": "2026-03-11", "kind": "reusable_lesson", "text": "缺少硬催化与异常量的权重股默认留在Watchlist，不升级为主交易标的", "ticker": null, "category": null}
+{"date": "2026-03-11", "kind": "track_assignment_lesson", "text": "强财报跳空股优先归入机器人轨道，并统一改用 gap-and-go", "ticker": null, "category": null}
+{"date": "2026-03-11", "kind": "track_assignment_lesson", "text": "缺少硬催化与异常量的权重股继续留在Watchlist，不因名气升级", "ticker": null, "category": null}
+{"date": "2026-03-11", "kind": "future_watchpoint", "text": "ORCL财报后强势能否从第二天持续到第三天，还是转为高位换手", "ticker": "ORCL", "category": null}
+{"date": "2026-03-11", "kind": "future_watchpoint", "text": "TSLA的China销量硬数据是否足以支持更早升级并持续多日", "ticker": "TSLA", "category": null}
+{"date": "2026-03-11", "kind": "future_watchpoint", "text": "NVDA在缺少硬催化时是否应长期维持Watchlist rather than 主交易标的", "ticker": "NVDA", "category": null}
+{"date": "2026-03-11", "kind": "reusable_lesson", "text": "财报股若隔夜大幅越过原Trigger，次日执行统一切换为 gap-and-go 框架", "ticker": null, "category": "structure_execution"}
+{"date": "2026-03-11", "kind": "reusable_lesson", "text": "biotech单股催化第二天是否继续可做，必须先看XBI是否同向确认", "ticker": null, "category": null}
+{"date": "2026-03-11", "kind": "reusable_lesson", "text": "缺少硬催化与异常量的权重股默认留在Watchlist，不升级为主交易标的", "ticker": null, "category": null}
+{"date": "2026-03-11", "kind": "reusable_lesson", "text": "缺少结构化OHLC或硬催化证据的候选，不给具体交易参数，直接写 unavailable", "ticker": null, "category": null}
+{"date": "2026-03-11", "kind": "track_assignment_lesson", "text": "强财报跳空股优先归入机器人轨道，并统一改用 gap-and-go", "ticker": null, "category": null}
+{"date": "2026-03-11", "kind": "track_assignment_lesson", "text": "缺少硬催化与异常量的权重股继续留在Watchlist，不因名气升级", "ticker": null, "category": null}
+{"date": "2026-03-11", "kind": "future_watchpoint", "text": "ORCL财报后强势能否从第二天持续到第三天", "ticker": "ORCL", "category": null}
+{"date": "2026-03-11", "kind": "future_watchpoint", "text": "TSLA China销量硬数据是否足以支持更早升级并持续多日", "ticker": "TSLA", "category": null}
+{"date": "2026-03-11", "kind": "future_watchpoint", "text": "NVDA在缺少硬催化时是否应长期维持Watchlist rather than 主交易标的", "ticker": "NVDA", "category": null}

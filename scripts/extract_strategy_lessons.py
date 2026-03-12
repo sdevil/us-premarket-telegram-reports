@@ -28,10 +28,12 @@ def extract_bullets(block: str) -> list[str]:
     return lines
 
 
-def append_markdown(lessons_path: Path, trade_date: str, durable_items: list[str], watch_items: list[str]) -> None:
+def append_markdown(lessons_path: Path, trade_date: str, durable_items: list[str], track_items: list[str], watch_items: list[str]) -> None:
     chunk = [f"\n### {trade_date}"]
     for item in durable_items:
         chunk.append(f"- Reusable lesson: {item}")
+    for item in track_items:
+        chunk.append(f"- Track assignment lesson: {item}")
     for item in watch_items:
         chunk.append(f"- Future watchpoint: {item}")
     chunk.append("")
@@ -59,9 +61,9 @@ def classify_text(text: str) -> tuple[str | None, str | None]:
     return ticker, category
 
 
-def append_jsonl(jsonl_path: Path, trade_date: str, durable_items: list[str], watch_items: list[str]) -> None:
+def append_jsonl(jsonl_path: Path, trade_date: str, durable_items: list[str], track_items: list[str], watch_items: list[str]) -> None:
     with jsonl_path.open("a", encoding="utf-8") as f:
-        for kind, items in [("reusable_lesson", durable_items), ("future_watchpoint", watch_items)]:
+        for kind, items in [("reusable_lesson", durable_items), ("track_assignment_lesson", track_items), ("future_watchpoint", watch_items)]:
             for item in items:
                 ticker, category = classify_text(item)
                 rec = {
@@ -88,6 +90,7 @@ def main() -> int:
     trade_date = date_match.group(1) if date_match else review_path.stem[:10]
 
     durable = extract_section(text, "长期规则候选")
+    track_assignment = extract_section(text, "track_assignment_lessons:")
     watchpoints = extract_section(text, "未来需要持续跟踪的关注点：")
     if not watchpoints:
         tail = text.split("长期规则候选", 1)[-1] if "长期规则候选" in text else ""
@@ -95,15 +98,16 @@ def main() -> int:
         watchpoints = m.group(1).strip() if m else ""
 
     durable_items = extract_bullets(durable)
+    track_items = extract_bullets(track_assignment)
     watch_items = extract_bullets(watchpoints)
 
-    if not durable_items and not watch_items:
+    if not durable_items and not track_items and not watch_items:
         print("No durable lessons found; nothing appended.")
         return 0
 
-    append_markdown(lessons_path, trade_date, durable_items, watch_items)
+    append_markdown(lessons_path, trade_date, durable_items, track_items, watch_items)
     if jsonl_path is not None:
-        append_jsonl(jsonl_path, trade_date, durable_items, watch_items)
+        append_jsonl(jsonl_path, trade_date, durable_items, track_items, watch_items)
 
     print(f"Appended lessons for {trade_date} to {lessons_path}")
     if jsonl_path is not None:
