@@ -87,6 +87,12 @@ Data-use rules:
 - For 非盯盘可执行性, prefer only setups with clearer mechanical execution and less dependence on opening microstructure.
 - A setup can be strong for机器人/盯盘执行 while being unsuitable for非盯盘手动执行; do not force both tracks to select the same names.
 - Rank candidates separately inside each track.
+- For each candidate, explain the track placement with concrete reasons, not generic wording.
+- Avoid vague phrases like "更稳定执行" unless you immediately specify why in rule-like terms.
+- Good track-allocation reasons should mention concrete properties such as: gap risk, VWAP dependency, opening-drive dependency, volatility, need for active stop adjustment, trigger clarity, or ability to pre-place a mechanical order.
+- In the 执行接口摘要（结构化） block, include only real candidates. Do not fabricate placeholder orders.
+- The robot_track_orders block should be concise and machine-friendly for automation handoff.
+- The manual_track_orders block should be concise and usable for non-monitoring manual execution.
 - When you mention relative volume or market conditions, anchor them to the provided context when possible.
 
 For each candidate, briefly cite the source basis in plain text, for example: 来源依据：Reuters / CNBC / Yahoo Finance / Nasdaq Market Activity / Finnhub / FRED / Trading Economics / EIA.
@@ -123,6 +129,8 @@ QQQ趋势：
 盯盘可执行性：高 / 中 / 低
 非盯盘可执行性：高 / 中 / 低
 建议执行方式：机器人执行 / 需要盯盘确认 / 仅观察
+轨道分配原因：请用规则化理由，不要空泛描述
+不适合另一轨道的原因：请明确指出不适配点
 关键价位（历史事实）
 昨日开盘价：
 昨日收盘价：
@@ -152,6 +160,8 @@ QQQ趋势：
 盯盘可执行性：高 / 中 / 低
 非盯盘可执行性：高 / 中 / 低
 建议执行方式：非盯盘可做 / 需要盯盘确认 / 仅观察
+轨道分配原因：请用规则化理由，不要空泛描述
+不适合另一轨道的原因：请明确指出不适配点
 关键价位（历史事实）
 昨日开盘价：
 昨日收盘价：
@@ -233,7 +243,13 @@ printf '%s\n' "$OUTPUT" | tee "$OUTFILE" >/dev/null
 python3 "$(pwd)/scripts/enforce_report_prices.py" "$OUTFILE" "$MARKET_CONTEXT_FILE"
 python3 "$(pwd)/scripts/strip_untrusted_price_sentences.py" "$OUTFILE"
 python3 "$(pwd)/scripts/enforce_dual_track_structure.py" "$OUTFILE"
-FINAL_OUTPUT="$(cat "$OUTFILE")"
+python3 "$(pwd)/scripts/refine_dual_track_output.py" "$OUTFILE"
+python3 "$(pwd)/scripts/refine_track_reasoning.py" "$OUTFILE"
+python3 "$(pwd)/scripts/compress_track_reasoning.py" "$OUTFILE"
+COMPACT_OUTFILE="${OUTFILE%.md}-telegram.md"
+python3 "$(pwd)/scripts/build_telegram_compact_report.py" "$OUTFILE" "$COMPACT_OUTFILE"
+FINAL_OUTPUT="$(cat "$COMPACT_OUTFILE")"
 openclaw message send --channel telegram --target "$TELEGRAM_TARGET" --message "$FINAL_OUTPUT"
 printf 'Saved overnight update to %s\n' "$OUTFILE"
+printf 'Saved compact Telegram report to %s\n' "$COMPACT_OUTFILE"
 rm -f "$MARKET_CONTEXT_FILE"
