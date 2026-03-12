@@ -8,8 +8,12 @@ mkdir -p "$REPORT_DIR"
 OUTFILE="$REPORT_DIR/${TRADE_DATE}-overnight.md"
 source "$(pwd)/scripts/common_env.sh"
 MARKET_CONTEXT="$(python3 "$(pwd)/scripts/build_market_context.py" premarket)"
+STRATEGY_GUIDANCE="$(python3 "$(pwd)/scripts/build_strategy_guidance.py")"
 PROMPT=$(cat <<EOF
 Update the US premarket long watchlist before the US market opens.
+
+Recent strategy lessons to apply when relevant:
+${STRATEGY_GUIDANCE}
 
 Structured market context (use this first; supplement with fresh English financial sources as needed):
 ${MARKET_CONTEXT}
@@ -224,5 +228,7 @@ EOF
 )
 OUTPUT="$(openclaw agent --agent trading-agent --timeout 600 --message "$PROMPT")"
 printf '%s\n' "$OUTPUT" | tee "$OUTFILE" >/dev/null
-openclaw message send --channel telegram --target "$TELEGRAM_TARGET" --message "$OUTPUT"
+python3 "$(pwd)/scripts/enforce_dual_track_structure.py" "$OUTFILE"
+FINAL_OUTPUT="$(cat "$OUTFILE")"
+openclaw message send --channel telegram --target "$TELEGRAM_TARGET" --message "$FINAL_OUTPUT"
 printf 'Saved overnight update to %s\n' "$OUTFILE"

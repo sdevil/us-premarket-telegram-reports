@@ -22,8 +22,12 @@ source "$(pwd)/scripts/common_env.sh"
 MARKET_CONTEXT_FILE="$(mktemp)"
 python3 "$(pwd)/scripts/build_market_context.py" review > "$MARKET_CONTEXT_FILE"
 MARKET_CONTEXT="$(cat "$MARKET_CONTEXT_FILE")"
+STRATEGY_GUIDANCE="$(python3 "$(pwd)/scripts/build_strategy_guidance.py")"
 PROMPT=$(cat <<EOF
 Review today's US equities trading session after the market close and evaluate the premarket recommendations.
+
+Recent strategy lessons to respect and critique when relevant:
+${STRATEGY_GUIDANCE}
 
 Structured market context (use this for index/rates/oil/macro context; supplement with fresh English financial sources as needed):
 ${MARKET_CONTEXT}
@@ -60,6 +64,7 @@ Review tasks:
 - Evaluate whether the structured market context was used correctly or ignored when it should have been decisive.
 - Evaluate separately whether the setup was more suitable for active monitoring or non-monitoring execution.
 - Evaluate whether each stock was assigned to the correct execution track.
+- Evaluate whether recent stored strategy lessons were applied correctly, misapplied, or should now be revised.
 - For every meaningful mismatch between forecast and reality, identify the main reason category: macro regime mismatch, sector mismatch, ticker-specific catalyst mismatch, structure/volume mismatch, or execution-rule mismatch.
 - Convert the mismatch into future watchpoints that should matter next time this stock or setup appears.
 - When a lesson feels durable, write it as a reusable rule instead of a one-off comment.
