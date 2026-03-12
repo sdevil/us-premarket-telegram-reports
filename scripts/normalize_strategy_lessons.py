@@ -27,9 +27,11 @@ def infer_category(text: str, current: str | None) -> str | None:
     if current:
         return current
     lower = text.lower()
+    if '轨道' in text or 'watchlist' in lower or 'gap-and-go' in lower:
+        return 'track_assignment'
     if 'xbi' in lower or '临床' in text or 'fda' in lower:
         return 'biotech_regulatory'
-    if 'gap-and-go' in lower or 'trigger' in text or 'watchlist' in lower:
+    if 'trigger' in text.lower() or '突破' in text or 'vwap' in lower:
         return 'structure_execution'
     if '油价' in text or 'spy' in lower or 'smh' in lower or 'macro' in lower:
         return 'macro_regime'
