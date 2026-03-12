@@ -91,6 +91,9 @@ Data-use rules:
 - Rank candidates separately inside each track.
 - Apply relevant recent strategy lessons when they clearly match the current setup, but do not force stale lessons onto unrelated names.
 - If a recent lesson warns that a ticker or setup should be downgraded under current conditions, reflect that in track placement or confidence.
+- In the 执行接口摘要（结构化） block, include only real candidates. Do not fabricate placeholder orders.
+- The robot_track_orders block should be concise and machine-friendly for automation handoff.
+- The manual_track_orders block should be concise and usable for non-monitoring manual execution.
 - When you mention relative volume or market conditions, anchor them to the provided context when possible.
 
 For each candidate, briefly cite the source basis in plain text, for example: 来源依据：Reuters / CNBC / Yahoo Finance / Nasdaq Market Activity / Finnhub / FRED / Trading Economics / EIA.
@@ -127,6 +130,8 @@ QQQ趋势：
 盯盘可执行性：高 / 中 / 低
 非盯盘可执行性：高 / 中 / 低
 建议执行方式：机器人执行 / 需要盯盘确认 / 仅观察
+轨道分配原因：
+不适合另一轨道的原因：
 关键价位（历史事实）
 昨日开盘价：
 昨日收盘价：
@@ -156,6 +161,8 @@ QQQ趋势：
 盯盘可执行性：高 / 中 / 低
 非盯盘可执行性：高 / 中 / 低
 建议执行方式：非盯盘可做 / 需要盯盘确认 / 仅观察
+轨道分配原因：
+不适合另一轨道的原因：
 关键价位（历史事实）
 昨日开盘价：
 昨日收盘价：
@@ -196,10 +203,49 @@ non_monitoring_candidates:
 - 
 - 
 watchlist_ticker:
+monitoring_rejection_reason:
+non_monitoring_rejection_reason:
 prediction_notes:
 - 
 - 
 - 
+
+执行接口摘要（结构化）
+robot_track_orders:
+  - ticker:
+    trigger:
+    entry:
+    stop:
+    target:
+    size:
+    setup_score:
+    win_probability:
+  - ticker:
+    trigger:
+    entry:
+    stop:
+    target:
+    size:
+    setup_score:
+    win_probability:
+
+manual_track_orders:
+  - ticker:
+    trigger:
+    entry:
+    stop:
+    target:
+    size:
+    setup_score:
+    win_probability:
+  - ticker:
+    trigger:
+    entry:
+    stop:
+    target:
+    size:
+    setup_score:
+    win_probability:
 
 Telegram 交易卡片
 机器人候选
@@ -241,7 +287,14 @@ printf '%s\n' "$OUTPUT" | tee "$OUTFILE" >/dev/null
 python3 "$(pwd)/scripts/enforce_report_prices.py" "$OUTFILE" "$MARKET_CONTEXT_FILE"
 python3 "$(pwd)/scripts/strip_untrusted_price_sentences.py" "$OUTFILE"
 python3 "$(pwd)/scripts/enforce_dual_track_structure.py" "$OUTFILE"
-FINAL_OUTPUT="$(cat "$OUTFILE")"
+python3 "$(pwd)/scripts/refine_dual_track_output.py" "$OUTFILE"
+python3 "$(pwd)/scripts/refine_track_reasoning.py" "$OUTFILE"
+python3 "$(pwd)/scripts/compress_track_reasoning.py" "$OUTFILE"
+python3 "$(pwd)/scripts/normalize_execution_blocks.py" "$OUTFILE"
+COMPACT_OUTFILE="${OUTFILE%.md}-telegram.md"
+python3 "$(pwd)/scripts/build_telegram_compact_report.py" "$OUTFILE" "$COMPACT_OUTFILE"
+FINAL_OUTPUT="$(cat "$COMPACT_OUTFILE")"
 openclaw message send --channel telegram --target "$TELEGRAM_TARGET" --message "$FINAL_OUTPUT"
 printf 'Saved primary report to %s\n' "$OUTFILE"
+printf 'Saved compact Telegram report to %s\n' "$COMPACT_OUTFILE"
 rm -f "$MARKET_CONTEXT_FILE"
