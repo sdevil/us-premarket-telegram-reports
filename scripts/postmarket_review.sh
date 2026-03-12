@@ -64,6 +64,7 @@ Review tasks:
 - Evaluate whether the structured market context was used correctly or ignored when it should have been decisive.
 - Evaluate separately whether the setup was more suitable for active monitoring or non-monitoring execution.
 - Evaluate whether each stock was assigned to the correct execution track.
+- For each reviewed stock, state the most important reason the assigned track was correct or incorrect.
 - Evaluate whether recent stored strategy lessons were applied correctly, misapplied, or should now be revised.
 - For every meaningful mismatch between forecast and reality, identify the main reason category: macro regime mismatch, sector mismatch, ticker-specific catalyst mismatch, structure/volume mismatch, or execution-rule mismatch.
 - Convert the mismatch into future watchpoints that should matter next time this stock or setup appears.
@@ -88,6 +89,8 @@ VIX：
 今日高点：
 今日低点：
 盯盘版结果：
+轨道分配是否正确：
+轨道分配核心原因：
 是否触发：
 开盘后表现：
 收盘结果：
@@ -111,6 +114,8 @@ MAE：
 今日高点：
 今日低点：
 非盯盘版结果：
+轨道分配是否正确：
+轨道分配核心原因：
 是否触发：
 开盘后表现：
 收盘结果：
@@ -139,6 +144,9 @@ main_mismatch_categories:
 - 
 monitoring_suitability_summary:
 non_monitoring_suitability_summary:
+track_assignment_lessons:
+- 
+- 
 next_session_adjustments:
 - 
 - 
