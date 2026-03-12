@@ -11,6 +11,8 @@ FIELDS = {
     '昨日收盘价': ('previous', 'close'),
     '今日开盘价': ('latest', 'open'),
     '今日收盘价': ('latest', 'close'),
+    '今日高点': ('latest', 'high'),
+    '今日低点': ('latest', 'low'),
 }
 
 

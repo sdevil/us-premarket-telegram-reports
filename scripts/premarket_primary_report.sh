@@ -10,9 +10,12 @@ source "$(pwd)/scripts/common_env.sh"
 MARKET_CONTEXT_FILE="$(mktemp)"
 python3 "$(pwd)/scripts/build_market_context.py" premarket > "$MARKET_CONTEXT_FILE"
 MARKET_CONTEXT="$(cat "$MARKET_CONTEXT_FILE")"
+STRATEGY_GUIDANCE="$(python3 "$(pwd)/scripts/build_strategy_guidance.py")"
 PROMPT=$(cat <<EOF
 Generate the next US trading day long watchlist.
 
+Recent strategy lessons to apply when relevant:
+${STRATEGY_GUIDANCE}
 Structured market context (use this first; supplement with fresh English financial sources as needed):
 ${MARKET_CONTEXT}
 
@@ -28,7 +31,9 @@ Requirements:
 - Return trade ideas in TWO tracks, not a single mixed list.
 - Track A: 机器人 / 盯盘执行候选.
 - Track B: 非盯盘手动执行候选.
-- Each track may contain 0 to 2 names depending on quality. Do not force low-quality filler.
+- Each track may contain 0 to 2 real names depending on quality. Do not force low-quality filler.
+- If a track has only 1 valid name, list only 1 real name and then explicitly say 该轨道今日无第二个合格候选.
+- If a track has no valid names, explicitly say 该轨道今日无合格候选.
 - Focus on: strong catalysts, strong relative volume, high liquidity, institutional participation, strong sector alignment, favorable risk/reward.
 
 Selection rules:
@@ -84,6 +89,8 @@ Data-use rules:
 - For 非盯盘可执行性, prefer only setups with clearer mechanical execution and less dependence on opening microstructure.
 - A setup can be strong for机器人/盯盘执行 while being unsuitable for非盯盘手动执行; do not force both tracks to select the same names.
 - Rank candidates separately inside each track.
+- Apply relevant recent strategy lessons when they clearly match the current setup, but do not force stale lessons onto unrelated names.
+- If a recent lesson warns that a ticker or setup should be downgraded under current conditions, reflect that in track placement or confidence.
 - When you mention relative volume or market conditions, anchor them to the provided context when possible.
 
 For each candidate, briefly cite the source basis in plain text, for example: 来源依据：Reuters / CNBC / Yahoo Finance / Nasdaq Market Activity / Finnhub / FRED / Trading Economics / EIA.
@@ -139,7 +146,7 @@ QQQ趋势：
 结构评分：
 胜率估计：
 
-#2 ... same structure
+#2 ... same structure only if there is a real second candidate; otherwise write: 该轨道今日无第二个合格候选。
 
 非盯盘手动执行候选
 #1 股票代码 – 公司名称
@@ -169,7 +176,7 @@ QQQ趋势：
 结构评分：
 胜率估计：
 
-#2 ... same structure
+#2 ... same structure only if there is a real second candidate; otherwise write: 该轨道今日无第二个合格候选。
 
 仅观察名单（可选）
 #1 股票代码 – 公司名称
@@ -205,6 +212,8 @@ Size：
 Setup Score：
 Win Probability：
 
+#2 ... only if there is a real second monitoring candidate
+
 非盯盘候选
 #1 TICKER
 Trigger：
@@ -214,6 +223,8 @@ Target：
 Size：
 Setup Score：
 Win Probability：
+
+#2 ... only if there is a real second non-monitoring candidate
 
 开盘执行要点
 机器人轨道：
@@ -229,6 +240,7 @@ OUTPUT="$(openclaw agent --agent trading-agent --timeout 600 --message "$PROMPT"
 printf '%s\n' "$OUTPUT" | tee "$OUTFILE" >/dev/null
 python3 "$(pwd)/scripts/enforce_report_prices.py" "$OUTFILE" "$MARKET_CONTEXT_FILE"
 python3 "$(pwd)/scripts/strip_untrusted_price_sentences.py" "$OUTFILE"
+python3 "$(pwd)/scripts/enforce_dual_track_structure.py" "$OUTFILE"
 FINAL_OUTPUT="$(cat "$OUTFILE")"
 openclaw message send --channel telegram --target "$TELEGRAM_TARGET" --message "$FINAL_OUTPUT"
 printf 'Saved primary report to %s\n' "$OUTFILE"

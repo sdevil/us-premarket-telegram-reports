@@ -18,6 +18,7 @@ def canonical_text(text: str) -> str:
     }
     for src, dst in replacements.items():
         t = t.replace(src, dst)
+    t = re.sub(r'TSLAChina', 'TSLA China', t)
     t = re.sub(r'\s+', ' ', t)
     return t
 
