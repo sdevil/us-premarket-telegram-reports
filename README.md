@@ -67,6 +67,25 @@ openclaw agent --channel telegram --to <TELEGRAM_TARGET> --deliver --message "..
   - reads archived report files from `reports/`
   - writes a review file under `reviews/`
 
+## Workflow rules
+
+Operational rules for future self-upgrades and maintenance:
+
+1. **Complete content goes to files first**
+   - full reports, reviews, structured learning outputs, and intermediate strategy artifacts should be saved locally in the repository
+   - Telegram should receive only a compact delivery version suitable for chat consumption
+
+2. **Compact Telegram delivery is the default**
+   - primary / overnight / review should prefer short Telegram-friendly output
+   - if a review is still too long, split it into multiple Telegram messages instead of dropping content from the archived file
+
+3. **Commit after meaningful self-learning upgrades**
+   - whenever the system improves prompts, extraction logic, learning rules, delivery format, or execution structure, create a git commit promptly
+   - the goal is to avoid losing strategy-learning progress or workflow upgrades
+
+4. **Push after important completed upgrades when credentials are available**
+   - do not leave major learning changes only in the working tree if they are ready to preserve remotely
+
 ## Scheduling used
 
 ### Timer 1
